@@ -31,7 +31,7 @@ const AppNavbar = (props) => {
         <Logout />
       </NavItem>
       <NavItem>
-        {isAuthenticated ? <NavLink><img width="24" height="24" src={user.avatar}></img></NavLink> : null}
+        {isAuthenticated ? <NavLink><img style={{borderRadius: "50%"}} width="24" height="24" alt={user.username} src={user.avatar+"?s=24"}></img></NavLink> : null}
       </NavItem>
     </>
   );

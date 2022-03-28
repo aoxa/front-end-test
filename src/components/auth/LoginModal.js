@@ -39,7 +39,7 @@ const LoginModal = (props) => {
           updateMessage(error.msg.msg)
         }        
   
-    }, [message, error]); 
+    }, [message, error, updateMessage]); 
   
     //we use layout here cause we need the render flow to finish before we clear up the modal value.
     useLayoutEffect(()=>{

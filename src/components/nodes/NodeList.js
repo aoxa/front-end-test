@@ -1,28 +1,29 @@
 import React, { useEffect } from "react";
 import {
-    Container, ListGroup, ListGroupItem, Button, Row, Col
+    Container, ListGroup, ListGroupItem, Row, Col
   } from 'reactstrap';
 import { connect } from 'react-redux';
 import { getNodes } from "../../actions/nodeAction";
 import ListingItem from "./NodeListingItem"; 
+import Pager from "../Pager";
 
 const NodeList = (props) => {
-    const { nodes } = props.node;
+    const { nodes, page, pageCount } = props.node;
     const { getNodes } = props;
 
     const nodesLock = nodes.reduce((prev, current)=>prev+current.id, "");
 
     useEffect( ()=>{
         getNodes()
-    }, [nodesLock]);
+    }, [nodesLock, getNodes]);
 
     return (
         <Container>
             <Row>
                 <Col xs="10">
                     <ListGroup>
-                        {nodes.map( (node, index) => (
-                            <ListGroupItem key={node.id}>
+                        {nodes.map( (node) => (
+                            <ListGroupItem style={{border: "unset"}} key={node.id}>
                                 <ListingItem node={node}></ListingItem>
                             </ListGroupItem>
                         ))}
@@ -32,13 +33,15 @@ const NodeList = (props) => {
                     
                 </Col>
             </Row>
-            
+            <Pager page={page} total={pageCount}></Pager>
         </Container>
     );
 }
 
 const mapStateToProps = (state) => ({
   node: state.node,
+  page: state.page,
+  total: state.pageCount,
   isAuthenticated: state.auth.isAuthenticated
 });
 

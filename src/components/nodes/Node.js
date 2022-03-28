@@ -19,7 +19,7 @@ const SubNodeContet = (props) => {
     return (
         <Row>
             <Col xs="2">{author ? <img src={author.avatar} style={avatarStyle} /> : subNode.author.username}</Col>
-            <Col xs="10">{subNode.body}</Col>
+            <Col xs="10"  dangerouslySetInnerHTML={{__html: subNode.body}}></Col>
         </Row>
     )
 }
@@ -46,7 +46,7 @@ const NodeContent = (props) => {
             `/services/v2/question/${props.match.params.nodeid}/answer.json`, config)
         .then( res => setCurrentAnswers(res.data) )
         .catch(err=>console.log(err))
-    } ,[] );
+    }, [props] );
 
     useUserInfoEffect(node.author, tokenConfig(props), setAuthor);
 
@@ -56,7 +56,7 @@ const NodeContent = (props) => {
             `/services/v2/action/${node.lastEditedAction}.json`, config)
         .then( res => setActivity(res.data) )
         .catch(err=>console.log(err))
-    } ,[] );
+    }, [props, node.lastEditedAction] );
 
     return (
         <Container> 
@@ -68,7 +68,7 @@ const NodeContent = (props) => {
             </Row>
             <Row>
                 <Col xs="2"></Col>
-                <Col xs="10">{node.body}</Col>
+                <Col xs="10" dangerouslySetInnerHTML={{__html: node.body}}></Col>
             </Row>
             <Row>
                 <Col xs="12">{`${node.answerCount} Answers`}</Col>
@@ -92,7 +92,7 @@ const Node = (props) => {
             `/services/v2/question/${props.match.params.nodeid}.json`, config)
         .then( res => setCurrent(res.data) )
         .catch(err=>console.log(err))
-    } ,[] );
+    } ,[props] );
 
     return (
     <Container>
